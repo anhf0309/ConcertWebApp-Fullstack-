@@ -1,4 +1,4 @@
-package com.glab.concertcapstone;
+package com.anhfuentes.concertcapstone;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

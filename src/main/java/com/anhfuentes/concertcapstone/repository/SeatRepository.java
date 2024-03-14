@@ -1,6 +1,6 @@
-package com.glab.concertcapstone.repository;
+package com.anhfuentes.concertcapstone.repository;
 
-import com.glab.concertcapstone.model.Seat;
+import com.anhfuentes.concertcapstone.model.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

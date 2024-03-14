@@ -1,4 +1,4 @@
-package com.glab.concertcapstone.model;
+package com.anhfuentes.concertcapstone.model;
 
 
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ public class Concert {
     private Long id;
 
     private String name;
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     private String venue;
 
     @OneToMany(mappedBy = "concert")

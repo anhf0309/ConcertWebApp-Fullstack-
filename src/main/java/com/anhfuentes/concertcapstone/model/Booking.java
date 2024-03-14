@@ -1,4 +1,4 @@
-package com.glab.concertcapstone.model;
+package com.anhfuentes.concertcapstone.model;
 
 
 import jakarta.persistence.*;
