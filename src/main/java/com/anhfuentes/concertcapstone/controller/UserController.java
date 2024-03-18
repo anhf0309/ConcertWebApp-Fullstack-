@@ -17,5 +17,4 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    // Other controller methods for user management
 }

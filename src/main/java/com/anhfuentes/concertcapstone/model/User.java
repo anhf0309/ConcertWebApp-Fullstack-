@@ -20,9 +20,13 @@ public class User {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     private Long id;
 
-    @NotBlank(message = "Username cannot be empty")
-    @Column(name="username")
-    private String username;
+    @NotBlank(message = "First name cannot be empty")
+    @Column(name="firstname")
+    private String firstName;
+
+    @NotBlank(message = "Last name cannot be empty")
+    @Column(name="lastname")
+    private String lastName;
 
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
