@@ -17,6 +17,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int numTickets;
+    private LocalDateTime bookingDate;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -25,6 +28,5 @@ public class Booking {
     @JoinColumn(name = "concert_id")
     private Concert concert;
 
-    private int numTickets;
-    private LocalDateTime bookingDate;
+
 }

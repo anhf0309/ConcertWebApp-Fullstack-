@@ -2,6 +2,7 @@ package com.anhfuentes.concertcapstone.service;
 
 import com.anhfuentes.concertcapstone.model.Booking;
 import com.anhfuentes.concertcapstone.repository.BookingRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +25,21 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
-    public boolean cancelBooking(Long bookingId) {
-        Optional<Booking> bookingOptional = bookingRepository.findById(bookingId);
-        if (bookingOptional.isPresent()) {
-            Booking booking = bookingOptional.get();
-            bookingRepository.deleteById(bookingId);
-            return true;
+    public Booking updateBooking(Booking booking) {
+        Long bookingId = booking.getId();
+        if(bookingId != null && bookingRepository.existsById(bookingId)) {
+            return bookingRepository.save(booking);
+        } else {
+            throw new EntityNotFoundException("Booking Not Found with id: " + bookingId);
         }
-        return false;
+    }
+
+    @Override
+    public boolean cancelBooking(Long bookingId) {
+        bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new EntityNotFoundException("Booking not found with id: " + bookingId));
+        bookingRepository.deleteById(bookingId);
+        return true;
     }
 
     @Override
@@ -39,8 +47,20 @@ public class BookingServiceImpl implements BookingService{
         return bookingRepository.findByUserId(userId);
     }
 
+
     @Override
     public List<Booking> getBookingsForConcert(Long concertId) {
         return bookingRepository.findByConcertId(concertId);
     }
+
+    @Override
+    public Optional<Booking> getBookingById(Long bookingId) {
+        return bookingRepository.findById(bookingId);
+    }
+
+    @Override
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
+
 }
