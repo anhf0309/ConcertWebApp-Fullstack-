@@ -28,5 +28,4 @@ public class Booking {
     @JoinColumn(name = "concert_id")
     private Concert concert;
 
-
 }

@@ -2,6 +2,8 @@ package com.anhfuentes.concertcapstone.controller;
 
 import com.anhfuentes.concertcapstone.model.Booking;
 import com.anhfuentes.concertcapstone.service.BookingService;
+import com.anhfuentes.concertcapstone.service.ConcertService;
+import com.anhfuentes.concertcapstone.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,15 @@ import java.util.List;
 public class BookingController {
 
     private final BookingService bookingService;
+    private final UserService userService;
+    private final ConcertService concertService;
+
 
     @Autowired
-    public BookingController(BookingService bookingService) {
+    public BookingController(BookingService bookingService, UserService userService, ConcertService concertService) {
         this.bookingService = bookingService;
+        this.userService = userService;
+        this.concertService = concertService;
     }
 
     // List all bookings
@@ -33,6 +40,8 @@ public class BookingController {
     @GetMapping("/new")
     public String showAddForm(Model model) {
         model.addAttribute("booking", new Booking());
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("concerts", concertService.getAllConcerts());
         return "bookings/add";
     }
 
@@ -50,6 +59,8 @@ public class BookingController {
         Booking booking = bookingService.getBookingById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Invalid booking Id: " + id));
         model.addAttribute("booking", booking);
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("concerts", concertService.getAllConcerts());
         return "bookings/edit";
     }
 
@@ -75,6 +86,6 @@ public class BookingController {
     public String listBookingsByUserId(@PathVariable("userId") Long userId, Model model) {
         List<Booking> bookings = bookingService.getBookingsByUser(userId);
         model.addAttribute("bookings", bookings);
-        return "bookings/userBookings"; // Assumes a Thymeleaf template named "userBookings.html"
+        return "bookings/userBookings";
     }
 }
