@@ -10,8 +10,9 @@ import java.util.List;
 
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Long> {
-    List<Seat> findByArenaIdAndIsBookedFalse(Long arenaId);
+    List<Seat> findByConcertIdAndIsBookedFalse(Long concertId);
     List<Seat> findByConcertId(Long concertId);
-    @Query("SELECT s.arena, COUNT(s) FROM seat s WHERE s.arena.id = :arenaId AND s.isBooked = false GROUP BY s.arena")
-    List<Object[]> countAvailableSeatsByArena(@Param("arenaId") Long arenaId);
+    @Query("SELECT COUNT(s) FROM seat s WHERE s.concert.id = :concertId AND s.isBooked = false")
+    Long countAvailableSeatsByConcert(@Param("concertId") Long concertId);
+
 }

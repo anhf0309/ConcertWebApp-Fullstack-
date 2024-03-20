@@ -28,6 +28,11 @@ public class Concert {
     @NotNull(message = "Concert date and time cannot be null")
     private LocalDateTime dateTime;
 
+    public Concert(Long id) {
+        this.id = id;
+    }
+
     @OneToMany(mappedBy = "concert")
     private List<Booking> bookings;
+
 }

@@ -16,9 +16,8 @@ public class Seat {
     @NotBlank(message = "Seat number cannot be empty")
     private String seatNumber;
     private boolean isBooked;
-
     @ManyToOne
-    @JoinColumn(name = "arena_id")
-    private Arena arena;
+    @JoinColumn(name = "concert_id")
+    private Concert concert;
 
 }

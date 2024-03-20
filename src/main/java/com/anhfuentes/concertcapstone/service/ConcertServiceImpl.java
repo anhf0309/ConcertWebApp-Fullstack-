@@ -12,14 +12,18 @@ import java.util.List;
 public class ConcertServiceImpl implements ConcertService {
 
     private final ConcertRepository concertRepository;
+    private final SeatService seatService;
 
     @Autowired
-    ConcertServiceImpl(ConcertRepository concertRepository) {
+    ConcertServiceImpl(ConcertRepository concertRepository, SeatService seatService) {
         this.concertRepository = concertRepository;
+        this.seatService = seatService;
     }
     @Override
     public Concert createConcert(Concert concert) {
-        return concertRepository.save(concert);
+        Concert savedConcert = concertRepository.save(concert);
+        seatService.initializeSeatsForConcert(savedConcert.getId());
+        return savedConcert;
     }
 
     @Override
