@@ -28,6 +28,10 @@ public class User {
     @Column(name="lastname")
     private String lastName;
 
+    @NotBlank(message = "Username cannot be empty")
+    @Column(name = "username")
+    private String username;
+
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
     @Column(name = "email")

@@ -26,7 +26,7 @@ public class Payment {
     private LocalDateTime paymentDate;
 
     @Enumerated(EnumType.STRING)  // Specify how the enum is persisted
-    private PaymentStatus status = PaymentStatus.RECEIVED;  // Default value
+    private PaymentStatus status = PaymentStatus.Received;  // Default value
 
     @OneToOne
     @JoinColumn(name = "booking_id")
