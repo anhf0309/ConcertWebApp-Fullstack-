@@ -28,9 +28,6 @@ public class Concert {
     @NotNull(message = "Concert date and time cannot be null")
     private LocalDateTime dateTime;
 
-    @NotBlank(message = "Venue cannot be blank")
-    private String venue;
-
     @OneToMany(mappedBy = "concert")
     private List<Booking> bookings;
 }
