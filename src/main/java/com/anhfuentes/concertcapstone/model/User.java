@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-
+import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor
@@ -30,7 +30,7 @@ public class User {
 
     @NotBlank(message = "Username cannot be empty")
     @Column(name = "username")
-    private String username;
+    private String userName;
 
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
@@ -44,4 +44,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
+
+
+
 }

@@ -1,16 +1,19 @@
 package com.anhfuentes.concertcapstone.service;
 
+import com.anhfuentes.concertcapstone.dto.UserDTO;
 import com.anhfuentes.concertcapstone.model.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserService {
-    User createUser(User user);
-    User getUserByUsername(String username) throws UsernameNotFoundException;
-    User updateUser(User user);
-    User findUserByEmail(String email) throws UsernameNotFoundException;
-    boolean deleteUser(Long id) throws UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+public interface UserService extends UserDetailsService {
+    public UserDetails loadUserByUsername(String userName);
+    public void create(UserDTO userDTO);
+    public User findUserByEmail(String email);
+    public User findUserByName(String name);
 
-    List<User> getAllUsers();
+    public List<User> getAllUsers();
 }

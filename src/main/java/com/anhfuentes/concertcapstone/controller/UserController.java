@@ -1,33 +1,64 @@
 package com.anhfuentes.concertcapstone.controller;
 
-import com.anhfuentes.concertcapstone.model.User;
-import com.anhfuentes.concertcapstone.service.UserService;
+import com.anhfuentes.concertcapstone.dto.UserDTO;
+import com.anhfuentes.concertcapstone.service.UserServiceImpl;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
 @Controller
-@RequestMapping("/user")
+@Slf4j
 public class UserController {
-
-    private final UserService userService;
-
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new
+                StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+    private final UserServiceImpl userDetailsService;
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+    @GetMapping("/")
+    private String redirectToLogin()
+    {
+        return "redirect:/login";
+    }
+    @GetMapping("/sign-up")
+    public String signUp(Model model)
+    {
+        model.addAttribute("userDto", new UserDTO());
+        return "sign-up";
+    }
+    @PostMapping("/signup-process")
+    public String signupProcess(@Valid @ModelAttribute ("userDto") UserDTO
+                                        userDTO, BindingResult bindingResult)
+    {
+        if(bindingResult.hasErrors())
+        {
+            log.warn("Wrong attempt");
+            return "sign-up";
+        }
+        userDetailsService.create(userDTO);
+        return "confirmation";
     }
 
-    @GetMapping("/profile")
-    public String userProfile(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user = userService.getUserByUsername(username);
-        model.addAttribute("user", user);
-        return "userProfile";
+    @GetMapping("/login")
+    public String getLoginPage()
+    {
+        log.info("Login page displayed");
+        return "login";
     }
-
-
+    @RequestMapping("/home")
+    public String getHome()
+    {
+        log.info("home page displayed");
+        return "home";
+    }
 }
