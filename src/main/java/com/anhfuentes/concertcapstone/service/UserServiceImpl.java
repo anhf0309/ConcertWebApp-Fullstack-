@@ -3,76 +3,69 @@ package com.anhfuentes.concertcapstone.service;
 import com.anhfuentes.concertcapstone.dto.UserDTO;
 import com.anhfuentes.concertcapstone.model.Role;
 import com.anhfuentes.concertcapstone.model.User;
+import com.anhfuentes.concertcapstone.repository.RoleRepository;
 import com.anhfuentes.concertcapstone.repository.UserRepository;
-import com.anhfuentes.concertcapstone.security.UserPrincipal;
-import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final RoleService roleService;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, PasswordEncoder passwordEncoder, PasswordEncoder passwordEncoder1){
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, PasswordEncoder passwordEncoder1){
+        super();
         this.userRepository = userRepository;
-        this.roleService = roleService;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(userName);
-        log.debug(userName);
-        if (user == null) {
-            log.warn("Invalid username or password {}", userName);
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new UserPrincipal(user, roleService.getRolesByUser(user.getId()));
-    }
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new
-                SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
 
-    @Transactional
-    public void create(UserDTO userDTO)
-    {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        User user = modelMapper.map(userDTO, User.class);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList(roleService.findRoleByRoleName("ROLE_USER")));
+
+    @Override
+    public void create(UserDTO userDTO) {
+        User user = new User();
+        user.setName(userDTO.getFirstName() + " " + userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        Role role = roleRepository.findRoleByName("ROLE_ADMIN");
+        if (role == null) {
+            role = checkRoleExist();
+        }
+        user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
 
-    public User findUserByEmail(String email)
-    {
-        return userRepository.findUserByEmail(email);
-    }
-    public User findUserByName(String name)
-    {
-        return userRepository.findUserByUserName(name);
+    private Role checkRoleExist() {
+        Role role = new Role();
+        role.setName("ROLE_ADMIN");
+        return roleRepository.save(role);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map((user) -> mapToUserDTO(user))
+                .collect(Collectors.toList());
+    }
+
+    private UserDTO mapToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+
+        String[] str = user.getName().split(" ");
+        userDTO.setFirstName(str[0]);
+        userDTO.setLastName(str[1]);
+        userDTO.setEmail(user.getEmail());
+        return userDTO;
+    }
+
 }

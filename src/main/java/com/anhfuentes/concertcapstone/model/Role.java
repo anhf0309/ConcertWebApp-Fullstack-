@@ -5,17 +5,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
-@Entity
+@Entity(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    public Role(String name) {
-        this.name = name;
+    @Column(nullable = false,unique = true)
+    private String Name;
+    @ManyToMany(mappedBy = "roles")
+    List<User> users = new ArrayList<>();
+    public Role(Long id, String Name, List<User> users) {
+        this.id = id;
+        this.Name = Name;
+        this.users = users;
     }
 }

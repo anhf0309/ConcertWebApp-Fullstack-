@@ -9,11 +9,8 @@ import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-public interface UserService extends UserDetailsService {
-    public UserDetails loadUserByUsername(String userName);
+public interface UserService {
     public void create(UserDTO userDTO);
     public User findUserByEmail(String email);
-    public User findUserByName(String name);
-
-    public List<User> getAllUsers();
+    public List<UserDTO> getAllUsers();
 }

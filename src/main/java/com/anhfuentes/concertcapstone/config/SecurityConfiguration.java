@@ -15,44 +15,31 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-    @Autowired
-    private UserServiceImpl userDetailsService;
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userDetailsService);
-        auth.setPasswordEncoder(passwordEncoder());
-        return auth;
-    }
+ @Bean
+    public static PasswordEncoder passwordEncoder() {
+     return new BCryptPasswordEncoder();
+ }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(11);
-    }
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(
-                        (auth) -> auth
-                                .requestMatchers("/", "/login*",
-                                        "/css/*", "/js/*", "/sign-up",
-                                        "/signup-process").permitAll()
-                                .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
-                                .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .successForwardUrl("/home")
-                        .permitAll()
-                )
-                .logout(
-                        logout -> logout
-                                .invalidateHttpSession(true)
-                                .clearAuthentication(true)
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll()
-                );
-        return http.build();
-    }
+ @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+     http.csrf((csrf) -> csrf.disable())
+             .authorizeHttpRequests((authz) -> authz
+                     .requestMatchers("/bookings").permitAll()
+                     .requestMatchers("/concerts").permitAll()
+                     .requestMatchers("/index").permitAll()
+                     .requestMatchers("/users").hasRole("ADMIN")
+             )
+             .formLogin(
+                     form -> form
+                             .loginPage("/login")
+                             .loginProcessingUrl("/login")
+                             .defaultSuccessUrl("/users")
+                             .permitAll()
+             ).logout(
+                     logout -> logout
+                             .logoutRequestMatcher(new
+                                     AntPathRequestMatcher("/logout"))
+                             .permitAll());
+                             return http.build();
+ }
 }
