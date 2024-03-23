@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService{
     private final RoleRepository roleRepository;
@@ -20,7 +21,7 @@ public class RoleServiceImpl implements RoleService{
     }
     @Override
     @Transactional
-    public Role findRoleByRoleName(String name) {
+    public Role findRoleByName(String name) {
         return roleRepository.findRoleByName(name);
     }
     @Override
@@ -30,5 +31,11 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public List<Role> getRolesByUser(long id) {
         return roleRepository.findRoleByUser(id);
+    }
+
+    @Override
+    public boolean roleExists(String name) {
+       Role role = roleRepository.findRoleByName(name);
+        return role != null;
     }
 }

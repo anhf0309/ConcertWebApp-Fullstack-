@@ -2,6 +2,7 @@ package com.anhfuentes.concertcapstone.dto;
 
 import com.anhfuentes.concertcapstone.validation.FieldMatch;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -11,17 +12,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@FieldMatch.List( { @FieldMatch(first = "password",
-        second = "matchingPassword",
-        message = "The password fields must match")})
+@FieldMatch.List({
+        @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
+        @FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
+})
 
 public class UserDTO {
 
     private Long id;
-
-    @NotEmpty
-    private String userName;
-
 
     @Pattern(regexp = "[A-Za-z]+$", message = "Only alphabetic allowed")
     private String firstName;
@@ -38,18 +36,19 @@ public class UserDTO {
     private String password;
 
     @NotEmpty(message = "Required")
-    private String matchingPassword;
+    private String confirmPassword;
 
-    public UserDTO(@NotEmpty String userName, @Pattern(regexp = "[A-Za-z]+$",
+    @AssertTrue
+    private Boolean terms;
+    public UserDTO(@NotEmpty @Pattern(regexp = "[A-Za-z]+$",
             message = "Only alphabetic allowed") String firstName, @Pattern(regexp =
             "[A-Za-z]+$", message = "Only alphabetic allowed") String lastName, @Email String
                            email, @NotEmpty(message = "Required") String password,
-            @NotEmpty(message = "Required") String matchingPassword) {
-        this.userName = userName;
+            @NotEmpty(message = "Required") String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.matchingPassword = matchingPassword;
+        this.confirmPassword = confirmPassword;
     }
 }

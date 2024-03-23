@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,10 +21,13 @@ public class User {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     private Long id;
 
+    @NotBlank(message = "first name cannot be empty")
+    @Column(name = "firstName",nullable = false)
+    private String firstName;
 
-    @NotBlank(message = "Username cannot be empty")
-    @Column(name = "name",nullable = false)
-    private String name;
+    @NotBlank(message = "last name cannot be empty")
+    @Column(name = "lastName",nullable = false)
+    private String lastName;
 
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
@@ -47,12 +48,18 @@ public class User {
             referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id",
                     referencedColumnName = "id")})
-    private List<Role> roles = new ArrayList<>();
+    private Collection<Role> roles;
 
-    public User(Long id, String name, String email, String password,
-                List<Role> roles) {
-        this.id = id;
-        this.name = name;
+
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.roles = roles;
