@@ -26,16 +26,22 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println("===========>IN filterChain() ");
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
+                                /*
                                 // Admin-only pages
-                                .requestMatchers("/concerts/add", "/concert/edit", "/bookings/edit", "/users/**").hasRole("ADMIN")
+                                .requestMatchers("/admin")
+                                .hasRole("ADMIN")
                                 // Both users and admins
-                                .requestMatchers("/login", "/register", "/userProfile", "/index").permitAll()
-                                // Anyone can view index
-                                .requestMatchers("/").permitAll()
-                                // All other requests require authentication
+                                .requestMatchers("/userProfile")
+                                .hasAnyRole("USER", "ADMIN")
+                                */
+                                // Public pages
+                                .requestMatchers("/login", "/register", "/index", "/js/**", "/css/**", "/img/**", "/webjars/**")
+                                .permitAll()
+                                // Any other request requires authentication
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
