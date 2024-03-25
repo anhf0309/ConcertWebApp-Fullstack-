@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -30,16 +31,15 @@ public class SecurityConfiguration {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                /*
+
                                 // Admin-only pages
-                                .requestMatchers("/admin")
+                                .requestMatchers("/admin","/users","/concert_list","/concert_add")
                                 .hasRole("ADMIN")
                                 // Both users and admins
                                 .requestMatchers("/userProfile")
                                 .hasAnyRole("USER", "ADMIN")
-                                */
                                 // Public pages
-                                .requestMatchers("/login", "/register", "/index", "/js/**", "/css/**", "/img/**", "/webjars/**")
+                                .requestMatchers("/login", "/register", "/index", "/js/**", "/css/**", "/images/**", "/webjars/**")
                                 .permitAll()
                                 // Any other request requires authentication
                                 .anyRequest().authenticated()
