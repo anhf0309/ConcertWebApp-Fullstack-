@@ -5,12 +5,15 @@ import com.anhfuentes.concertcapstone.model.Role;
 import com.anhfuentes.concertcapstone.model.User;
 import com.anhfuentes.concertcapstone.repository.RoleRepository;
 import com.anhfuentes.concertcapstone.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -76,14 +79,52 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream()
+        System.out.println("Fetched users size: " + users.size()); // Debug log
+
+        List<UserDTO> userDTOs = users.stream()
                 .map(this::mapToUserDTO)
                 .collect(Collectors.toList());
+        System.out.println("User DTOs size: " + userDTOs.size()); // Debug log
+        return userDTOs;
     }
+
+
+    @Transactional
+    public boolean deleteUserAndRolesById(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        // Assuming roles are directly managed within the User entity
+        user.getRoles().clear(); // Remove the associations to roles
+        userRepository.save(user); // Update the user to reflect the removal of roles
+
+        userRepository.deleteById(userId); // Now delete the user
+        return true;
+    }
+
+    @Override
+    public UserDTO getUserById(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            return mapToUserDTO(user);
+        }
+        return null;
+    }
+
+    @Transactional
+    public void updateUser(UserDTO userDTO) {
+        User user = userRepository.findById(userDTO.getId()).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        userRepository.save(user);
+    }
+
 
     private UserDTO mapToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-
+        userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());

@@ -10,4 +10,5 @@ public interface RoleService {
     List<Role> getAllRoles();
     List<Role> getRolesByUser(long id);
     boolean roleExists(String name);
+    boolean deleteRole(Long roleId);
 }

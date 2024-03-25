@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class = "row">
+    <div class = "col-lg-3">
+        <a th:href = "@{/admin/add_concert}" class = "btn btn-primary btn-sm mb-3"> Add Concert</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>List of Concerts</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Artist</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Poster</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="concert : ${concerts}">
+            <td th:text="${concert.id}">ID</td>
+            <td th:text="${concert.artist}">Artist</td>
+            <td th:text="${concert.dateTime}">Date</td>
+            <td th:text="${concert.name}">Name</td>
+            <td th:text="${concert.posterImage}">Poster</td>
+            <td>
+                <!-- Edit Button -->
+                <a th:href="@{'/admin/edit-concert/' + ${concert.id}}" class="btn btn-primary">Edit</a>
+                <!-- Delete Button -->
+                <a th:href="@{'/admin/delete-concert/' + ${concert.id}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <footer>
+        <a th:href="@{/logout}" class="btn">Logout</a> <a th:href="@{/admin}" class="btn">Admin Home</a> <a th:href="@{/index}" class="btn">Homepage</a>
+    </footer>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -28,6 +28,10 @@ public class Concert {
     @NotNull(message = "Concert date and time cannot be null")
     private LocalDateTime dateTime;
 
+    @Lob
+    @Column(name = "poster_image", columnDefinition = "LONGBLOB")
+    private byte[] posterImage;
+
     public Concert(Long id) {
         this.id = id;
     }

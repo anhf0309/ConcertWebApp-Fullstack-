@@ -33,13 +33,13 @@ public class SecurityConfiguration {
                         authorizeRequests
 
                                 // Admin-only pages
-                                .requestMatchers("/admin","/users","/concert_list","/concert_add")
+                                .requestMatchers("/admin**","/users","/concert_list","/concert_add")
                                 .hasRole("ADMIN")
                                 // Both users and admins
                                 .requestMatchers("/userProfile")
-                                .hasAnyRole("USER", "ADMIN")
+                                .hasAnyRole("USER","ADMIN")
                                 // Public pages
-                                .requestMatchers("/login", "/register", "/index", "/js/**", "/css/**", "/images/**", "/webjars/**")
+                                .requestMatchers("/login", "/register", "/index","/details", "js/**", "css/**", "images/**", "/webjars/**")
                                 .permitAll()
                                 // Any other request requires authentication
                                 .anyRequest().authenticated()
@@ -48,6 +48,7 @@ public class SecurityConfiguration {
                         formLogin ->
                                 formLogin
                                         .loginPage("/login")
+                                        .failureUrl("/login?error=true")
                                         .permitAll()
                 )
                 .logout(

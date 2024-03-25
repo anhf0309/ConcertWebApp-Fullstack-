@@ -32,10 +32,6 @@ public class UserAuthController {
         return new UserDTO();
     }
 
-    @GetMapping("/index")
-    public String home() {
-        return "index";
-    }
 
     @GetMapping("/login")
     public String login() {

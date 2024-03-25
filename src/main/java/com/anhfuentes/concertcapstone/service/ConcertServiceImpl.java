@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service
@@ -19,6 +20,7 @@ public class ConcertServiceImpl implements ConcertService {
         this.concertRepository = concertRepository;
         this.seatService = seatService;
     }
+
     @Override
     public Concert createConcert(Concert concert) {
         Concert savedConcert = concertRepository.save(concert);

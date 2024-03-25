@@ -10,4 +10,9 @@ public interface UserService extends UserDetailsService {
      boolean create(UserDTO userDTO);
      User findUserByEmail(String email);
      List<UserDTO> getAllUsers();
+     boolean deleteUserAndRolesById(Long userId);
+     UserDTO getUserById(Long userId);
+     void updateUser(UserDTO userDTO);
+
+
 }
