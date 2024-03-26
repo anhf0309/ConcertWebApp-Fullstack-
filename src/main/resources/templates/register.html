@@ -10,13 +10,42 @@
           crossorigin="anonymous">
     <title>Registration</title>
 </head>
+<style>
+    body {
+        font-family: 'Tillana', sans-serif;
+        margin: 2%;
+        padding: 0;
+        background-image: url("/images/concert-background.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .row-justify-content-center {
+        display: flex;
+        justify-content: center;
+        border: rgba(9, 52, 52, 0.251) solid 1px;
+        border-radius: 10px;
+        background: rgba(9, 52, 52, 0.251);
+        position: relative;
+        margin-top: 10%;
+
+
+    }
+
+    .col-md-6 {
+        color: white;
+    }
+
+    .form-control{
+    }
+</style>
 <body>
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row-justify-content-center">
         <div class="col-md-6">
 
             <div th:if="${param.success}">
-                <div class="alert alert-info">You've successfully registered! Now you can start booking your next concert  <a href="/" th:href="@{/index}">here</a></div>
+                <div class="alert alert-info">You've successfully registered! Get concert your concert tickets <a href="/" th:href="@{/index}">here</a></div>
             </div>
 
             <h1 class="text-center">Registration</h1>
@@ -72,7 +101,7 @@
                      th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
                     <input id="terms" type="checkbox" th:field="*{terms}" />   <label
                         class="control-label" for="terms"> I agree with the <a
-                        href="#">terms and conditions</a> for Registration.
+                        href="#">terms and conditions</a>
                 </label>
                     <p class="error-message"
                        th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation

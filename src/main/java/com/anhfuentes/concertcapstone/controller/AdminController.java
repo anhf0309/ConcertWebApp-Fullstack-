@@ -96,14 +96,17 @@ public class AdminController {
         boolean success = concertService.deleteConcert(id);
         if (!success) {
             redirectAttributes.addFlashAttribute("errorMessage", "Could not delete concert. Concert might not exist, or there are constraints preventing deletion.");
+        } else {
+            redirectAttributes.addFlashAttribute("successMessage", "Concert and associated seats deleted successfully.");
         }
         return "redirect:/admin/concerts";
     }
 
+
     @GetMapping("/admin/edit-concert/{id}")
     public String editConcertForm(@PathVariable Long id, Model model) {
-            model.addAttribute("concert", concertService.getConcertById(id));
-            return "admin_only/concert_edit";
+        model.addAttribute("concert", concertService.getConcertById(id));
+        return "admin_only/concert_edit";
     }
 
     @PostMapping("/admin/update-concert/{id}")
@@ -121,5 +124,3 @@ public class AdminController {
 
 
 }
-
-

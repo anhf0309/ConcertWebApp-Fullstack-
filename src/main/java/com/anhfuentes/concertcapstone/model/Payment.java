@@ -25,8 +25,8 @@ public class Payment {
     @NotNull(message = "Payment date cannot be null")
     private LocalDateTime paymentDate;
 
-    @Enumerated(EnumType.STRING)  // Specify how the enum is persisted
-    private PaymentStatus status = PaymentStatus.Received;  // Default value
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status = PaymentStatus.Received;
 
     @OneToOne
     @JoinColumn(name = "booking_id")

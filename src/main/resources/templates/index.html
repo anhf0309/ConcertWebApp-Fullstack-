@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concert Carousel</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik+Scribble&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dosis:wght@200..800&family=Imbue:opsz,wght@10..100,100..900&family=Rubik+Scribble&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <img class="logo" src="/images/logo.png" alt="logo">
+</header>
+<nav class="navbar">
+    <a href="/index">Home</a>
+    <a href="/login">Login</a>
+    <a href="/register">Sign-up</a>
+    <a href="/userProfile">My Tickets</a>
+</nav>
+<div  class="carousel">
+<h3>Upcoming shows</h3>
+<div class="carousel-container">
+    <div class="carousel-inner" id="carousel-inner">
+    </div>
+    <div class="carousel-controls">
+        <button onclick="prevSlide()">Prev</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+</div>
+</div>
+<div class="avenue-info">
+    <h3>Welcome to The Punzel Avenue</h3>
+    <div >
+        <p class="avenue-text">Welcome to The Punzel Avenue, a hidden gem nestled in the heart of our bustling city. As you step through our doors, you enter a realm where music transcends boundaries and magic fills the air.
+
+            For years, The Punzel Avenue has been a cornerstone of our local music scene, a beloved haven where artists and enthusiasts alike come together to celebrate the power of sound. From its humble beginnings as a small venue with big dreams, it has blossomed into a cultural hub, renowned for its diverse lineup and unwavering commitment to artistic expression.
+
+            What sets The Punzel Avenue apart is not just the music, but the vibrant tapestry of experiences it offers. Whether you're attending an intimate acoustic session in our cozy lounge or dancing the night away at one of our electrifying concerts, every visit promises a journey of discovery and delight.</p>
+    </div>
+    <div class="avenue-photo">
+        <img src="/images/venue1.jpg" alt="inside the venue">
+    </div>
+</div>
+
+<div class="contact">
+    <h3>Email us!</h3>
+    <div>
+        <form action="mailto:fanh0552@gmail.com" method="post" enctype="text/plain">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+<script src="/js/script.js"></script>
+</body>
+</html>

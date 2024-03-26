@@ -13,19 +13,14 @@ import java.util.List;
 public class ConcertServiceImpl implements ConcertService {
 
     private final ConcertRepository concertRepository;
-    private final SeatService seatService;
-
     @Autowired
-    ConcertServiceImpl(ConcertRepository concertRepository, SeatService seatService) {
+    ConcertServiceImpl(ConcertRepository concertRepository) {
         this.concertRepository = concertRepository;
-        this.seatService = seatService;
     }
 
     @Override
     public Concert createConcert(Concert concert) {
-        Concert savedConcert = concertRepository.save(concert);
-        seatService.initializeSeatsForConcert(savedConcert.getId());
-        return savedConcert;
+        return concertRepository.save(concert);
     }
 
     @Override
@@ -49,12 +44,14 @@ public class ConcertServiceImpl implements ConcertService {
         return concertRepository.findAll();
     }
 
-    @Override
-    public boolean deleteConcert(Long concertId) {
-        if(concertRepository.existsById(concertId)) {
-            concertRepository.deleteById(concertId);
+    public boolean deleteConcert(Long id) {
+        try {
+            concertRepository.deleteById(id);
             return true;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
+
+
 }

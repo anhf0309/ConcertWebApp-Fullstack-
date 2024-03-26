@@ -91,7 +91,7 @@ public class MainController {
 
     @GetMapping("/index")
     public String home(Model model) {
-        List<Concert> concerts = concertService.getAllConcerts(); // Assuming you have a method in ConcertService to get all concerts
+        List<Concert> concerts = concertService.getAllConcerts();
         model.addAttribute("concerts", concerts);
         return "index";
     }

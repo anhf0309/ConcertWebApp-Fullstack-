@@ -69,7 +69,7 @@ public class UserAuthController {
     public String users(Model model) {
         List<UserDTO> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        return "users";
+        return "/admin_only/users";
     }
 }
 

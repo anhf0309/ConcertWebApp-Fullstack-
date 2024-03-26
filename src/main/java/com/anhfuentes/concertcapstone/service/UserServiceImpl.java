@@ -41,21 +41,15 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-        // Find the role by name
         Role defaultRole = roleRepository.findRoleByName("ROLE_USER");
-
-        // If role not found, create a new one
         if (defaultRole == null) {
             defaultRole = new Role();
             defaultRole.setName("ROLE_USER");
             roleRepository.save(defaultRole);
         }
-
-        // Check if the user should be an admin
         if (userDTO.getEmail().endsWith("@punzelave.com")) {
             Role adminRole = roleRepository.findRoleByName("ROLE_ADMIN");
 
-            // If role not found, create a new one
             if (adminRole == null) {
                 adminRole = new Role();
                 adminRole.setName("ROLE_ADMIN");
@@ -79,12 +73,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        System.out.println("Fetched users size: " + users.size()); // Debug log
+        System.out.println("Fetched users size: " + users.size());
 
         List<UserDTO> userDTOs = users.stream()
                 .map(this::mapToUserDTO)
                 .collect(Collectors.toList());
-        System.out.println("User DTOs size: " + userDTOs.size()); // Debug log
+        System.out.println("User DTOs size: " + userDTOs.size());
         return userDTOs;
     }
 
@@ -95,11 +89,9 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return false;
         }
-        // Assuming roles are directly managed within the User entity
-        user.getRoles().clear(); // Remove the associations to roles
-        userRepository.save(user); // Update the user to reflect the removal of roles
-
-        userRepository.deleteById(userId); // Now delete the user
+        user.getRoles().clear();
+        userRepository.save(user);
+        userRepository.deleteById(userId);
         return true;
     }
 

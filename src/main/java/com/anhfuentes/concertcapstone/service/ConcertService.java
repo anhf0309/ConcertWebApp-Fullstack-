@@ -10,4 +10,5 @@ public interface ConcertService {
     Concert getConcertById(Long id) throws EntityNotFoundException;
     List<Concert> getAllConcerts();
     boolean deleteConcert(Long concertId);
+
 }

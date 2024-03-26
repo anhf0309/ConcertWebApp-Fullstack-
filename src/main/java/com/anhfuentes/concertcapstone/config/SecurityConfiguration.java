@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/userProfile")
                                 .hasAnyRole("USER","ADMIN")
                                 // Public pages
-                                .requestMatchers("/login", "/register", "/index","/details", "js/**", "css/**", "images/**", "/webjars/**")
+                                .requestMatchers("/login", "/register", "/index","/details", "/details/**", "js/**", "css/**", "images/**", "/webjars/**")
                                 .permitAll()
                                 // Any other request requires authentication
                                 .anyRequest().authenticated()

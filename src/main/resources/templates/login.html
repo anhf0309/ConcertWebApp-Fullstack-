@@ -7,17 +7,35 @@
           rel="stylesheet"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
     <style>
+        body {
+            font-family: 'Tillana', sans-serif;
+            margin: 2%;
+            padding: 0;
+            background-image: url("/images/concert-background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
         .center {
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            border: rgba(9, 52, 52, 0.251) solid 1px;
+            border-radius: 10px;
+            background: rgba(9, 52, 52, 0.251);
+            position: relative;
+            margin-top: 10%;
+
+
+        }
+
+        .col-md-6 {
+            color: white;
         }
     </style>
 </head>
 <body>
 <div class="container center">
-
     <div class="col-md-6">
         <h1 class="text-center">Login</h1>
         <form th:action="@{/login}" method="post">
