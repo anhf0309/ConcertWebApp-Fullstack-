@@ -44,14 +44,10 @@ public class RoleServiceImpl implements RoleService{
 
     @Transactional
     public boolean deleteRole(Long roleId) {
-        // Check if any users are assigned this role
         boolean isRoleAssignedToAnyUser = userRepository.existsByRolesId(roleId);
         if (isRoleAssignedToAnyUser) {
-            // Remove the role from those users or inform the user that the role is in use
             return false;
-        } else {
-            // Safe to delete the role
-            roleRepository.deleteById(roleId);
+        } else {roleRepository.deleteById(roleId);
             return true;
         }
     }

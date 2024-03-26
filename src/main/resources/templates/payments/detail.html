@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Payment Details</title>
+</head>
+<body>
+<h1>Payment Details</h1>
+<p>Payment ID: <span th:text="${payment.id}"></span></p>
+<p>Amount: <span th:text="${payment.amount}"></span></p>
+<p>Booking ID: <span th:text="${payment.booking.id}"></span></p>
+
+<a href="/payments">Back to list</a>
+</body>
+</html>

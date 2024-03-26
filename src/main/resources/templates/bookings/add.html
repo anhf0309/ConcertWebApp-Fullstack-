@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Add Booking</title>
+</head>
+<body>
+<h1>Add New Booking</h1>
+<form th:action="@{/bookings/create}" th:object="${booking}" method="post">
+
+  <label for="userId">User ID:</label>
+  <input type="text" id="userId" name="userId" th:field="*{user.Id}" />
+
+  <label for="concertId">Concert ID:</label>
+  <input type="text" id="concertId" name="concertId" th:field="*{concert.Id}" />
+
+  <button type="submit">Submit</button>
+</form>
+</body>
+</html>

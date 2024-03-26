@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recent Payments</title>
+</head>
+<body>
+<h1>Recent Payments</h1>
+<div th:each="payment : ${payments}">
+    <p>Payment ID: <span th:text="${payment.id}"></span>, Booking ID: <span th:text="${payment.booking.id}"></span></p>
+    <a th:href="@{/payments/refund/{id}(id=${payment.id})}">Refund</a> |\
+    <a th:href="@{/payments/booking/{bookingId}(bookingId=${payment.booking.id})}">Details</a>
+</div>
+</body>
+</html>

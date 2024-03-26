@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>All Bookings</title>
+</head>
+<body>
+<h1>All Bookings</h1>
+<div th:each="booking : ${bookings}">
+    <p th:text="'Booking ID: ' + ${booking.id} + ', User ID: ' + ${booking.userId} + ', Concert ID: ' + ${booking.concertId}"></p>
+    <a th:href="@{/bookings/edit/{id}(id=${booking.id})}">Edit</a> |
+    <a th:href="@{/bookings/delete/{id}(id=${booking.id})}" th:attr="onclick='return confirm(\"Are you sure?\")'">Delete</a>
+</div>
+<a href="/bookings/new">Add New Booking</a>
+</body>
+</html>

@@ -4,15 +4,137 @@
     <meta charset="UTF-8">
     <title>List of Users</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik+Scribble&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dosis:wght@200..800&family=Imbue:opsz,wght@10..100,100..900&family=Rubik+Scribble&display=swap" rel="stylesheet">
+    <style>
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        h3 {
+            color: rgba(197, 138, 177, 0.8);
+        }
+        p {
+            margin: 10px 0;
+        }
+        strong {
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            color: #fff;
+            background-color: rgba(183, 132, 132, 0.84);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #c58ab1;
+        }
+
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 2%;
+            padding: 0;
+            color: #260d1e;
+            background-image: url("/images/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            border: 1px;
+            border-radius: 10px;
+        }
+
+        header {
+            background: white;
+            color: #fff;
+            padding: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 200px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        h1 {
+            margin: 5px 0;
+        }
+
+        p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #c58ab1;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #a1468c;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+            margin: 5% auto auto;
+        }
+    </style>
 </head>
 <body>
-<div class = "row">
-    <div class = "col-lg-3">
-        <a th:href = "@{/admin/add_concert}" class = "btn btn-primary btn-sm mb-3"> Add Concert</a>
-    </div>
-</div>
+<header>
+    <img class="logo" src="/images/logo.png" alt="logo">
+</header>
+<nav class="navbar">
+    <a href="/index">Home</a>
+    <a href="/login">Login</a>
+    <a href="/register">Sign-up</a>
+    <a href="/userProfile">My Profile</a>
+</nav>
 <div class="container mt-5">
     <h2>List of Concerts</h2>
+    <div class = "row">
+        <div class = "col-lg-3">
+            <a th:href = "@{/admin/add_concert}" class = "btn btn-primary btn-sm mb-3"> Add Concert</a>
+        </div>
+    </div>
     <table class="table table-bordered table-hover">
         <thead class="thead-dark">
         <tr>
@@ -40,7 +162,7 @@
         </tbody>
     </table>
     <footer>
-        <a th:href="@{/logout}" class="btn">Logout</a> <a th:href="@{/admin}" class="btn">Admin Home</a> <a th:href="@{/index}" class="btn">Homepage</a>
+        <a th:href="@{/logout}" class="btn">Logout</a> <a th:href="@{/admin}" class="btn">Admin</a>
     </footer>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
