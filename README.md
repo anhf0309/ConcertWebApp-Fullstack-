@@ -2,8 +2,6 @@
 # ConcertCapstone Project
 
 ## OVERVIEW
-The ConcertCapstone project is a robust Spring Boot application for managing concert bookings, featuring user authentication, concert listings, booking management, admin functionalities, RESTful web services, and leverages Jakarta Persistence API (JPA) with Hibernate for database operations. The front-end is enriched with JavaScript to enhance user interactions and provide a dynamic and responsive user experience## OVERVIEW
-The ConcertCapstone project is a robust Spring Boot application for managing concert bookings, featuring user authentication, concert listings, booking management, admin functionalities, RESTful web services, and leverages Jakarta Persistence API (JPA) with Hibernate for database operations. The front-end is enriched with JavaScript to enhance user interactions and provide a dynamic and responsive user experience## OVERVIEW
 The ConcertCapstone project is a robust Spring Boot application for managing concert bookings, featuring user authentication, concert listings, booking management, admin functionalities, RESTful web services, and leverages Jakarta Persistence API (JPA) with Hibernate for database operations. The front-end is enriched with JavaScript to enhance user interactions and provide a dynamic and responsive user experience
 ## Feature
 User Authentication: Secure user registration and login functionalities.
