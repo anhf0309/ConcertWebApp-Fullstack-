@@ -17,7 +17,7 @@ header {
     color: #fff;
     padding: 100px;
     display: flex;
-    justify-content: center; /* Center content horizontally */
+    justify-content: center;
     align-items: center;
     position: relative;
 }
@@ -194,11 +194,11 @@ p {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Ensure padding and border are included in width */
+    box-sizing: border-box;
 }
 
 .contact textarea {
-    height: 100px; /* Adjust height as needed */
+    height: 100px;
 }
 
 .contact button {
