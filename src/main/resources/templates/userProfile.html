@@ -10,20 +10,12 @@
             padding: 0;
             background-color: #f0f0f0;
         }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
         h2 {
             text-align: center;
             color: #333;
         }
         h3 {
-            color: #007bff;
+            color: rgba(197, 138, 177, 0.8);
         }
         p {
             margin: 10px 0;
@@ -43,7 +35,7 @@
             padding: 10px 20px;
             margin-top: 10px;
             color: #fff;
-            background-color: #007bff;
+            background-color: rgba(183, 132, 132, 0.84);
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -51,13 +43,90 @@
             transition: background-color 0.3s;
         }
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #c58ab1;
+        }
+
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 2%;
+            padding: 0;
+            color: #260d1e;
+            background-image: url("/images/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            border: 1px;
+            border-radius: 10px;
+        }
+
+        header {
+            background: white;
+            color: #fff;
+            padding: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 200px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        h1 {
+            margin: 5px 0;
+        }
+
+        p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #c58ab1;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #a1468c;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+            margin: 5% auto auto;
         }
     </style>
 </head>
 <body>
+<header>
+    <img class="logo" src="/images/logo.png" alt="logo">
+</header>
+<nav class="navbar">
+    <a href="/index">Home</a>
+    <a href="/login">Login</a>
+    <a href="/register">Sign-up</a>
+    <a href="/userProfile">My Profile</a>
+</nav>
 <div class="container">
-    <h2>User Profile</h2>
     <div>
         <p><strong>First Name:</strong> <span th:text="${user.firstName}">FirstName</span></p>
         <p><strong>Last Name:</strong> <span th:text="${user.lastName}">LastName</span></p>
@@ -65,20 +134,40 @@
     </div>
 
     <h3>Recent Bookings</h3>
-    <div th:if="${bookings.isEmpty()}">
-        <p>No bookings found.</p>
-    </div>
     <div th:if="${!bookings.isEmpty()}">
-        <ul>
-            <li th:each="booking : ${bookings}">
-                <span th:text="${booking.concert.name}">Concert Name</span> -
-                <span th:text="${#temporals.format(booking.bookingDate, 'yyyy-MM-dd HH:mm')}">Booking Date</span>
-            </li>
-        </ul>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+            <tr style="background-color: #c58ab1; color: #fff;">
+                <th style="padding: 10px;">Concert Name</th>
+                <th style="padding: 10px;">Artist</th>
+                <th style="padding: 10px;">Concert Date</th>
+                <th style="padding: 10px;">Booking Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking, iterStat : ${bookings}" th:class="${iterStat.odd}? 'odd' : 'even'">
+                <td style="border: 1px solid #ddd; padding: 10px;" th:text="${booking.concert.name}">Concert Name</td>
+                <td style="border: 1px solid #ddd; padding: 10px;" th:text="${booking.concert.artist}">Artist</td>
+                <td style="border: 1px solid #ddd; padding: 10px;" th:text="${#temporals.format(booking.concert.dateTime, 'yyyy-MM-dd')}">Date</td>
+                <td style="border: 1px solid #ddd; padding: 10px;" th:text="${#temporals.format(booking.bookingDate, 'yyyy-MM-dd HH:mm')}">Booking Date</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">
+                    <form id="cancelForm" th:action="@{'/cancelBooking/' + ${booking.id}}" method="post">
+                        <button type="button" onclick="confirmCancellation()">Cancel</button>
+                        <script>
+                            function confirmCancellation() {
+                                if (confirm("Are you sure you want to cancel your ticket?")) {
+                                    document.getElementById("cancelForm").submit();
+                                }
+                            }
+                        </script>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
     </div>
     <a th:href="@{/logout}" class="btn">Logout</a>
-    <br><br>
-    <a th:href="@{/index}" class="btn">Homepage</a>
 </div>
 </body>
 </html>
